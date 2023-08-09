@@ -9,7 +9,7 @@ import { IProperty } from '../IProperty';
 })
 export class PropertyListComponent implements OnInit{
 
-  properties: any = [];
+  properties: Array<IProperty> = [];
 
   constructor(private housingService: HousingService) {  }
   ngOnInit(): void {

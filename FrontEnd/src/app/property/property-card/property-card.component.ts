@@ -16,7 +16,7 @@ import { IProperty } from "../IProperty";
 export class PropertyCardCompomnent {
 
   @Input()
-  property: any;
+  property!: IProperty;
 
 
 }
