@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-register',
@@ -11,18 +11,29 @@ export class UserRegisterComponent implements OnInit {
 
   registrationForm!: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.registrationForm = new FormGroup({
-      userName: new FormControl('mark', Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-      confirmPassword: new FormControl(null, Validators.required),
-      mobile: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)])
+    // this.registrationForm = new FormGroup({
+    //   userName: new FormControl('mark', Validators.required),
+    //   email: new FormControl(null, [Validators.required, Validators.email]),
+    //   password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+    //   confirmPassword: new FormControl(null, Validators.required),
+    //   mobile: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)])
 
-    }, this.passwordMatchingValidator);
+    // }, this.passwordMatchingValidator);
+    this.createRegistrationForm();
   }
+
+  createRegistrationForm(){
+    this.registrationForm = this.fb.group({
+      userName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [null, Validators.required],
+      mobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
+    }, {Validators: this.passwordMatchingValidator})
+}
 
   passwordMatchingValidator(fg: AbstractControl): Validators | null {
     return fg.get('password')?.value === fg.get('confirmPassword')?.value ? null :
