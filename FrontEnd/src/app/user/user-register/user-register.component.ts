@@ -10,6 +10,7 @@ export class UserRegisterComponent implements OnInit {
 
 
   registrationForm!: FormGroup;
+  user: any = {};
 
   constructor(private fb: FormBuilder) { }
 
@@ -63,6 +64,23 @@ export class UserRegisterComponent implements OnInit {
 
   onSubmit() {
     console.log (this.registrationForm);
+    this.user = Object.assign(this.user, this.registrationForm.value);
+    this.addUser(this.user);
+    this.registrationForm.reset();
+    }
+
+    addUser(user: any){
+      let users = [];
+      if(localStorage.getItem('Users')){
+        const storedUsers = localStorage.getItem('Users');
+        if(storedUsers!==null){
+          users = JSON.parse(storedUsers);
+        }
+        users = [this.user, ...users];
+      }else{
+        users = [user];
+      }
+      localStorage.setItem('Users', JSON.stringify(users));
     }
 
 }
