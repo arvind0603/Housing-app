@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-register',
@@ -12,7 +13,7 @@ export class UserRegisterComponent implements OnInit {
   registrationForm!: FormGroup;
   user: any = {};
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
     // this.registrationForm = new FormGroup({
@@ -65,22 +66,9 @@ export class UserRegisterComponent implements OnInit {
   onSubmit() {
     console.log (this.registrationForm);
     this.user = Object.assign(this.user, this.registrationForm.value);
-    this.addUser(this.user);
+    this.userService.addUser(this.user);
     this.registrationForm.reset();
     }
 
-    addUser(user: any){
-      let users = [];
-      if(localStorage.getItem('Users')){
-        const storedUsers = localStorage.getItem('Users');
-        if(storedUsers!==null){
-          users = JSON.parse(storedUsers);
-        }
-        users = [this.user, ...users];
-      }else{
-        users = [user];
-      }
-      localStorage.setItem('Users', JSON.stringify(users));
-    }
 
 }
