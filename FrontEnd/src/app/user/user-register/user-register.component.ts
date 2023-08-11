@@ -11,6 +11,7 @@ export class UserRegisterComponent implements OnInit {
 
 
   registrationForm!: FormGroup;
+  userSubmitted: boolean = false;
   user: any = {};
 
   constructor(private fb: FormBuilder, private userService: UserService) { }
@@ -65,9 +66,15 @@ export class UserRegisterComponent implements OnInit {
 
   onSubmit() {
     console.log (this.registrationForm);
-    this.user = Object.assign(this.user, this.registrationForm.value);
-    this.userService.addUser(this.user);
-    this.registrationForm.reset();
+    this.userSubmitted = true;
+
+    if (this.registrationForm.valid) {
+      this.user = Object.assign(this.user, this.registrationForm.value);
+      this.userService.addUser(this.user);
+      this.registrationForm.reset();
+      this.userSubmitted = false;
+    }
+
     }
 
 
