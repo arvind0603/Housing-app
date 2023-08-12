@@ -6,24 +6,58 @@
     <form (ngSubmit)="onSubmit()" #Form="ngForm">
       <div>
         <tabset #formTabs>
+           
           <tab heading="Basic Info">
+
+            <p> I want to</p>
+            <div class="btn-group" btnRadioGroup>
+              <label class="btn btn-outline-primary m-1 " btnRadio="1" role="button" name="SellRent"> Sell</label>
+              <label class="btn btn-outline-primary m-1 " btnRadio="2" role="button" name="SellRent"> Rent</label>
+            </div>
+
+            <div class="form-group col-12">
+              <p>BHK</p>
+              <div class="btn-group" btnRadioGroup>
+                <label 
+                *ngFor="let bhk of [1,2,3,4]"
+                class="btn btn-outline-primary  m-1  "
+                [btnRadio]="bhk" tabindex="0" role="button" name="BHK"> {{bhk}}</label>
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <p>Property Type</p>
+              <div class="btn-group" btnRadioGroup>
+                <label 
+                *ngFor="let pType of propertyTypes"
+                class="btn btn-outline-primary  m-1  "
+                [btnRadio]="pType" tabindex="0" role="button" name="pType"> {{pType}}</label>
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <p>Furnish Type</p>
+              <div class="btn-group" btnRadioGroup>
+                <label 
+                *ngFor="let fType of furnishTypes"
+                class="btn btn-outline-primary  m-1  "
+                [btnRadio]="fType" tabindex="0" role="button" name="fType"> {{fType}}</label>
+              </div>
+            </div>
+
             <div class="form-group col-12 ">
-              <label for="name">Name</label>
+              <label for="name">in Building/Society/Project</label>
               <input type="text" class="form-control" #propName="ngModel" ngModel name="Name" required minlength="5">
               <span *ngIf="!propName.valid && propName.touched" class="error-block">
                 <span *ngIf="propName.errors?.['required']"> Please provide name</span> 
                 <span *ngIf="propName.errors?.['minlength']"> Name must be atleast 5 char long</span> 
               </span>
             </div>
+    
       
             <div class="form-group col-12 ">
-              <label for="type">Type</label>
-              <input type="text" class="form-control " ngModel name="Type">
-            </div>
-      
-            <div class="form-group col-12 ">
-              <label for="price">Price</label>
-              <input type="text" class="form-control " ngModel name="Price">
+              <label>City</label>
+              <input type="text" class="form-control">
             </div>
       
             <div class="form-group col-12 ">
@@ -98,12 +132,13 @@
           </tab>
           <tab heading="Other Details">
             <div class="form-group col-12">
-              <label>Ready to Move</label><br/>
-              <input type="radio" id='Yes' value='1' name="RTM">
-              <label class="m-2">Yes</label>
-
-              <input type="radio" id="No" value='2' name="RTM">
-              <label class="m-2">No</label>
+              <p>Ready to Move</p>
+              <div class="btn-group" btnRadioGroup>
+                <label 
+                *ngFor="let RTM of ['Yes','No']"
+                class="btn btn-outline-primary  m-1  "
+                [btnRadio]="RTM" tabindex="0" role="button" name="RTM"> {{RTM}}</label>
+              </div>
             </div>
 
             <div class="form-group col-3">
@@ -117,13 +152,23 @@
             </div>
 
             <div class="form-group col-12">
-              <label>Gated Community</label>
-              <input type="text" class="form-control">
+              <p>Gated Community</p>
+              <div class="btn-group" btnRadioGroup>
+                <label 
+                *ngFor="let gc of ['Yes','No']"
+                class="btn btn-outline-primary  m-1  "
+                [btnRadio]="gc" tabindex="0" role="button" name="gc"> {{gc}}</label>
+              </div>
             </div>
 
             <div class="form-group col-12">
-              <label>Main Entrance</label>
-              <input type="text" class="form-control">
+              <p>Ready to Move</p>
+              <div class="btn-group" btnRadioGroup>
+                <label 
+                *ngFor="let aptDirection of ['East','West', 'North','South']"
+                class="btn btn-outline-primary  m-1  "
+                [btnRadio]="aptDirection" tabindex="0" role="button" name="aptDirection"> {{aptDirection}}</label>
+              </div>
             </div>
 
             <div class="form-group col-12">
