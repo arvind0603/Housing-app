@@ -5,6 +5,7 @@ import { Route, Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { from } from 'rxjs';
 import { IProperty } from '../IProperty';
+import { Ipropertybase } from 'src/app/models/ipropertybase';
 
 @Component({
   selector: 'app-add-property',
@@ -19,12 +20,17 @@ export class AddPropertyComponent implements OnInit {
   propertyTypes: Array<string> = ['House', 'Apartments', 'Villas'];
   furnishTypes: Array<string> = ['Fully', 'Semi-Furnished', 'Not Furnished'];
 
-  propertyView: IProperty = {
+  propertyView: Ipropertybase = {
     Id: null,
     SellRent: null,
     Name: '',
-    Type: null,
-    Price: null
+    FType: null,
+    Price: null,
+    PType: null,
+    BHK: null,
+    BuiltArea: null,
+    City: null,
+    RTM: null
   }
 
   constructor(private route: Router) { }
