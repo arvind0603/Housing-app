@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { IProperty } from '../property/IProperty';
 import { Observable } from 'rxjs';
 import { Ipropertybase } from '../models/ipropertybase';
+import { Property } from '../models/property';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,10 @@ export class HousingService {
         })
       );
       
+   }
+
+   addProperty(property: Property){
+    localStorage.setItem('newProp', JSON.stringify(property));
    }
 }
 

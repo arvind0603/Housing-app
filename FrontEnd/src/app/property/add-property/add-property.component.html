@@ -327,7 +327,6 @@
                       [btnRadio]="RTM"
                       tabindex="0"
                       role="button"
-                      
                     >
                       {{ RTM }}</label
                     >
@@ -341,7 +340,7 @@
                   </div>
                 </div>
 
-                <div class="form-group col-3">
+                <div class="form-group col-3" *ngIf="this.RTM.value == 'No'">
                   <label>Possession/Avaialble From</label>
                   <input
                     type="text"
@@ -353,7 +352,7 @@
                   />
                 </div>
 
-                <div class="form-group col-12">
+                <div class="form-group col-12"  *ngIf="this.RTM.value == 'Yes'" >
                   <label>Age of Property</label>
                   <input
                     type="text"
