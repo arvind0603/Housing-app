@@ -28,7 +28,7 @@ export class AddPropertyComponent implements OnInit {
   NextClicked: boolean = false;
   property = new Property();
 
-  propertyTypes: Array<string> = ['House', 'Apartments', 'Villas'];
+  propertyTypes: Array<string> = ['House', 'Apartment', 'Villas'];
   furnishTypes: Array<string> = ['Fully', 'Semi-Furnished', 'Not Furnished'];
 
   propertyView: Ipropertybase = {
@@ -194,6 +194,7 @@ export class AddPropertyComponent implements OnInit {
   }
 
   mapProperty(): void {
+    this.property.Id = this.housingService.newPropId();
     this.property.SellRent = +this.SellRent.value;
     this.property.BHK = this.BHK.value;
     this.property.PType = this.PType.value;
