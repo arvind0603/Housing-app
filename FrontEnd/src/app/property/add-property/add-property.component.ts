@@ -11,6 +11,7 @@ import { Route, Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Ipropertybase } from 'src/app/models/ipropertybase';
 import { Property } from 'src/app/models/property';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { HousingService } from 'src/app/services/housing.service';
 
 @Component({
@@ -47,6 +48,7 @@ export class AddPropertyComponent implements OnInit {
     private route: Router, 
     private fb: FormBuilder,
     private housingService: HousingService,
+    private alertify: AlertifyService
     ) {}
 
   ngOnInit() {
@@ -177,11 +179,16 @@ export class AddPropertyComponent implements OnInit {
       console.log(this.addPropertyForm);
       this.mapProperty();
       this.housingService.addProperty(this.property);
-      console.log('Congrats! your property listed on our website!');
+      this.alertify.success('Congrats! your property listed on our website!');
       // console.log("sell rent: " + this.addPropertyForm.value.BasicInfo.SellRent)
+      if(this.SellRent.value == 1) {
+        this.route.navigate(['/']);
+      }else {
+        this.route.navigate(['/rent-property']);
+      }
       
     } else {
-      console.log('Please review and fill out all the fields!');
+      this.alertify.error('Please review and fill out all the fields!');
       console.log(this.addPropertyForm);
     }
   }
