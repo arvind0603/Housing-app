@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { map } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IProperty } from '../property/IProperty';
@@ -14,8 +14,21 @@ export class HousingService {
 
   constructor(private http: HttpClient) { }
 
+  performApiRequest() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.get('http://localhost:5009/api/city', httpOptions);
+  }
+
   getAllCities(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:30171/api/city');
+    return this.performApiRequest().pipe(
+      // Assuming the response is an array of strings
+      map((response: any) => response as string[])
+    );
   }
 
   getProperty(id: number) {

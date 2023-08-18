@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,16 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors();
+            services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.WithOrigins("http://localhost:4200") // Your Angular app's localhost URL
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+    });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,7 +46,8 @@ namespace WebAPI
             }
 
             app.UseRouting();
-            app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            app.UseCors();
 
             app.UseAuthorization();
 
