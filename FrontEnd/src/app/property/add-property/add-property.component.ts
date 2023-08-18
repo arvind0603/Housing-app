@@ -45,7 +45,7 @@ export class AddPropertyComponent implements OnInit {
   };
 
   constructor(
-    private route: Router, 
+    private route: Router,
     private fb: FormBuilder,
     private housingService: HousingService,
     private alertify: AlertifyService
@@ -53,6 +53,9 @@ export class AddPropertyComponent implements OnInit {
 
   ngOnInit() {
     this.CreateAddPropertyForm();
+    this.housingService.getAllCities().subscribe((data) => {
+      console.log(data);
+    });
   }
 
   CreateAddPropertyForm() {
@@ -186,7 +189,7 @@ export class AddPropertyComponent implements OnInit {
       }else {
         this.route.navigate(['/rent-property']);
       }
-      
+
     } else {
       this.alertify.error('Please review and fill out all the fields!');
       console.log(this.addPropertyForm);
