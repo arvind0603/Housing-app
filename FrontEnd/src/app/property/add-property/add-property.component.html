@@ -108,14 +108,14 @@
                 </div>
                 <!-- <div class="form-group col-12 ">
                   <label for="name">in Building/Society/Project</label>
-                  <input type="text" class="form-control" 
-                  #propName="ngModel" ngModel 
-                  formControlName="Name" 
+                  <input type="text" class="form-control"
+                  #propName="ngModel" ngModel
+                  formControlName="Name"
                   required minlength="5"
                   [(ngModel)]="propertyView.Name">
                   <span *ngIf="!propName.valid && propName.touched" class="error-block">
-                    <span *ngIf="propName.errors?.['required']"> Please provide name</span> 
-                    <span *ngIf="propName.errors?.['minlength']"> Name must be atleast 5 char long</span> 
+                    <span *ngIf="propName.errors?.['required']"> Please provide name</span>
+                    <span *ngIf="propName.errors?.['minlength']"> Name must be atleast 5 char long</span>
                   </span>
                 </div> -->
                 <div class="form-group col-12">
@@ -133,19 +133,22 @@
                     Please select building, society or project name
                   </div>
                   <!-- <span *ngIf="!propName.valid && propName.touched" class="error-block">
-                    <span *ngIf="propName.errors?.['required']"> Please provide name</span> 
-                    <span *ngIf="propName.errors?.['minlength']"> Name must be atleast 5 char long</span> 
+                    <span *ngIf="propName.errors?.['required']"> Please provide name</span>
+                    <span *ngIf="propName.errors?.['minlength']"> Name must be atleast 5 char long</span>
                   </span> -->
                 </div>
 
                 <div class="form-group col-12">
                   <label>City</label>
-                  <input
-                    type="text"
+                  <select
                     class="form-control"
                     [(ngModel)]="propertyView.City"
-                    formControlName="City"
-                  />
+                    formControlName="City">
+                    <option value="">--select-city--</option>
+                  <option *ngFor="let city of cityList" value={{city}}>
+                    {{ city }}
+                  </option>
+                  </select>
                   <div
                     class="error-block"
                     *ngIf="City.invalid && (NextClicked || City.touched)"
