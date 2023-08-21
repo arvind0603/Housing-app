@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BackEnd.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
@@ -7,10 +8,17 @@ namespace BackEnd.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get() {
+        private readonly DataContext dataContext;
+        public CityController(DataContext dataContext)
+        {
+            this.dataContext = dataContext;
 
-            return new string[] { "Atalnta", "Dallas", "New York"};
+        }
+        [HttpGet]
+        public IActionResult Get() {
+
+            var cities = dataContext.Cities.ToList();
+            return Ok(cities);
         }
     }
 }
