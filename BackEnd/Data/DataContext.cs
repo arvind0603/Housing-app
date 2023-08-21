@@ -13,6 +13,10 @@ namespace BackEnd.Data
         {
         }
         public DbSet<City> Cities { get; set; }
-        
+
+        internal void AddCity(City city)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

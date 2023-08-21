@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEnd.Data.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,15 +33,15 @@ namespace WebAPI
             
             services.AddControllers();
             services.AddCors(options =>
-    {
-        options.AddDefaultPolicy(builder =>
-        {
-            builder.WithOrigins("http://localhost:4200") // Your Angular app's localhost URL
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-    });
-            
+                {
+                    options.AddDefaultPolicy(builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200") // Your Angular app's localhost URL
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+                });
+            services.AddScoped<ICityRepository, CityRepository>();          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
