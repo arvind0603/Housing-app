@@ -1,4 +1,5 @@
 using BackEnd.Data;
+using BackEnd.Helpers;
 using BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,7 @@ namespace WebAPI
                             .AllowAnyHeader();
                     });
                 });
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();          
         }
 
