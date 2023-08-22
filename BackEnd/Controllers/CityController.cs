@@ -30,6 +30,7 @@ namespace BackEnd.Controllers
         //Get api/city
         [HttpGet]
         public async Task<IActionResult> Get() {
+            throw new UnauthorizedAccessException();
 
             var cities = await uow.CityRepository.GetCitiesAsync();
             var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
@@ -86,10 +87,18 @@ namespace BackEnd.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity(int id, CityDto cityDto) {
 
+            if (id != cityDto.Id){
+                return BadRequest("Update not allowed");
+            }
             var cityFromDb = await uow.CityRepository.FindCity(id);
+
+            if (cityFromDb == null){
+                return BadRequest("Update not allowed Db");
+            }
             cityFromDb.LastUpdatedBy = 1;
             cityFromDb.LastUpdatedOn = DateTime.Now;
             mapper.Map(cityDto, cityFromDb);
+            throw new Exception("Some unknown error occured");
             await uow.SaveAsync();
             return StatusCode(200);
 

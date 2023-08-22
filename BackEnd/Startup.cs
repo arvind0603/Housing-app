@@ -1,6 +1,9 @@
+using System.Net;
 using BackEnd.Data;
+using BackEnd.Extensions;
 using BackEnd.Helpers;
 using BackEnd.Interfaces;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI
@@ -40,11 +43,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.ConfigureExceptionHandler(env);
+            
             app.UseRouting();
 
             app.UseCors();
