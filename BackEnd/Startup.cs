@@ -23,6 +23,7 @@ namespace WebAPI
                 // Configuration.GetConnectionString("Server=ILD-US-LAP-0201\\SQLEXPRESS; Database=Housing; integrated security = true"))
             
             services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddCors(options =>
                 {
                     options.AddDefaultPolicy(builder =>

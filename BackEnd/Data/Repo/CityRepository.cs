@@ -33,5 +33,9 @@ namespace BackEnd.Data.Repo
             return await dataContext.Cities.ToListAsync();
         }
 
+        public async Task<City> FindCity(int id)
+        {
+            return await dataContext.Cities.FindAsync(id);
+        }
     }
 }
