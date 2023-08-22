@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEnd.Interfaces;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,9 +33,5 @@ namespace BackEnd.Data.Repo
             return await dataContext.Cities.ToListAsync();
         }
 
-        public async Task<bool> SaveChangesAsync()
-        {
-            return await dataContext.SaveChangesAsync() > 0;
-        }
     }
 }

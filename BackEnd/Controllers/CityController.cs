@@ -1,5 +1,6 @@
 ﻿using BackEnd.Data;
 using BackEnd.Data.Repo;
+using BackEnd.Interfaces;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,11 @@ namespace BackEnd.Controllers
     public class CityController : ControllerBase
     {
         // private readonly DataContext dataContext;
-        public ICityRepository repo;
-        public CityController(ICityRepository repo)
+        private readonly IUnitOfWork uow;
+
+        public CityController(IUnitOfWork uow)
         {
-            this.repo = repo;
+            this.uow = uow;
             // this.dataContext = dataContext;
 
         }
@@ -23,15 +25,15 @@ namespace BackEnd.Controllers
         [HttpGet]
         public async Task<IActionResult> Get() {
 
-            var cities = await repo.GetCitiesAsync();
+            var cities = await uow.CityRepository.GetCitiesAsync();
             return Ok(cities);
         }
 
         //Post api/city/post (Json object)
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(City city) {
-            repo.AddCity(city);
-            await repo.SaveChangesAsync();
+            uow.CityRepository.AddCity(city);
+            await uow.SaveAsync();
             return StatusCode(201);
         }
 
@@ -50,8 +52,8 @@ namespace BackEnd.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteCity(int id) {
 
-            repo.DeleteCity(id);
-            await repo.SaveChangesAsync();
+            uow.CityRepository.DeleteCity(id);
+            await uow.SaveAsync();
             return Ok(id);
         }
     }
