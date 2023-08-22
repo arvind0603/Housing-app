@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using BackEnd.Errors;
 
 namespace BackEnd.Middlewares
 {
@@ -9,11 +11,15 @@ namespace BackEnd.Middlewares
     {
         private readonly RequestDelegate next;
         private readonly ILogger<ExceptionMiddleware> logger;
+        private readonly IHostEnvironment env;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next, 
+                                    ILogger<ExceptionMiddleware> logger, 
+                                    IHostEnvironment env)
         {
             this.next = next;
             this.logger = logger;
+            this.env = env;
         }
 
 
@@ -24,9 +30,30 @@ namespace BackEnd.Middlewares
             }
             catch (Exception ex)
             {
+                ApiError respose;
+                HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+                string message;
+                var exceptionType = ex.GetType();
+
+                if (exceptionType == typeof(UnauthorizedAccessException)) {
+                    statusCode = HttpStatusCode.Forbidden;
+                    message = "You are not authorized to access";
+                }
+                else {
+                    statusCode = HttpStatusCode.InternalServerError;
+                    message = "Some unknown error occurred";
+                }
+
+
+                if (env.IsDevelopment()){
+                    respose = new ApiError((int)statusCode, ex.Message, ex.StackTrace.ToString());
+                } else {
+                    respose = new ApiError((int)statusCode, message);
+                }
                 logger.LogError(ex, ex.Message);
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync(ex.Message);
+                context.Response.StatusCode = (int)statusCode;
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(respose.ToString());
             }
         }
     
