@@ -3,6 +3,7 @@ using BackEnd.Data;
 using BackEnd.Extensions;
 using BackEnd.Helpers;
 using BackEnd.Interfaces;
+using BackEnd.Middlewares;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +44,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.ConfigureExceptionHandler(env);
+            // app.ConfigureExceptionHandler(env);
+            app.UseMiddleware<ExceptionMiddleware>();
             
             app.UseRouting();
 
