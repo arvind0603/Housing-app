@@ -5,6 +5,7 @@ using BackEnd.Data.Repo;
 using BackEnd.Dtos;
 using BackEnd.Interfaces;
 using BackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
 {
-    
+    [Authorize]
     public class CityController : BaseController
     {
         // private readonly DataContext dataContext;
@@ -28,8 +29,9 @@ namespace BackEnd.Controllers
         }
         //Get api/city
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get() {
-            throw new UnauthorizedAccessException();
+            // throw new UnauthorizedAccessException();
 
             var cities = await uow.CityRepository.GetCitiesAsync();
             var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);

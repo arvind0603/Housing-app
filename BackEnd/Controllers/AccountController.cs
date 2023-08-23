@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using BackEnd.Dtos;
 using BackEnd.Interfaces;
 using BackEnd.Models;
@@ -16,9 +12,11 @@ namespace BackEnd.Controllers
     public class AccountController : BaseController
     {
         private readonly IUnitOfWork uow;
+        private readonly IConfiguration configuration;
 
-        public AccountController(IUnitOfWork uow)
+        public AccountController(IUnitOfWork uow, IConfiguration configuration)
         {
+            this.configuration = configuration;
             this.uow = uow;
         }
 
@@ -32,16 +30,19 @@ namespace BackEnd.Controllers
                 return Unauthorized();
             }
 
-            var loginRes = new LoginResDto();
-            loginRes.Username = loginReq.Username;
-            loginRes.Token = CreateJWT(user);
+            var loginRes = new LoginResDto
+            {
+                Username = loginReq.Username,
+                Token = CreateJWT(user)
+            };
 
             return Ok(loginRes);
         }
 
         private string CreateJWT(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Shhh... this is Top Secret Key"));
+            var secretKey = configuration.GetSection("AppSettings:Key").Value;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             var claims = new Claim[] {
                 new Claim(ClaimTypes.Name, user.Username),
@@ -52,7 +53,7 @@ namespace BackEnd.Controllers
 
             var tokenDescription = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddDays(10),
                 SigningCredentials = signingCredentials
             };
 
