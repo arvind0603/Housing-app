@@ -20,7 +20,7 @@ namespace WebAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureHostConfiguration(configHost =>
                 {
-                    configHost.AddEnvironmentVariables(prefix: "HSPA_");
+                    configHost.AddEnvironmentVariables(prefix: "Housing_");
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

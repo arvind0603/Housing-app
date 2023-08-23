@@ -42,6 +42,7 @@ namespace BackEnd.Controllers
         private string CreateJWT(User user)
         {
             var secretKey = configuration.GetSection("AppSettings:Key").Value;
+            // Console.WriteLine(secretKey);
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             var claims = new Claim[] {

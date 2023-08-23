@@ -7,6 +7,7 @@ using BackEnd.Interfaces;
 using BackEnd.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -24,9 +25,17 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var builder = new SqlConnectionStringBuilder(
+                Configuration.GetConnectionString("DefaultConn"));
+            builder.Password = Configuration.GetSection("DBPassword").Value;
+
+            var connectionString = builder.ConnectionString;
+            Console.WriteLine(connectionString + "Arvind \n\n");
+
             // using Microsoft.EntityFrameworkCore;
             services.AddDbContext<BackEnd.Data.DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConn")));
+                options.UseSqlServer(connectionString));
                 // Configuration.GetConnectionString("Server=ILD-US-LAP-0201\\SQLEXPRESS; Database=Housing; integrated security = true"))
             
             services.AddControllers();
@@ -44,6 +53,7 @@ namespace WebAPI
             services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
             var secretKey = Configuration.GetSection("AppSettings:Key").Value;
+            Console.Write(secretKey + " Arvind \n\n");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => {
