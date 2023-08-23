@@ -13,6 +13,7 @@ namespace BackEnd.Data
         {
         }
         public DbSet<City> Cities { get; set; }
+        public DbSet<User> Users { get; set; }
 
         internal void AddCity(City city)
         {

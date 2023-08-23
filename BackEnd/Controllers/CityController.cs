@@ -12,9 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CityController : ControllerBase
+    
+    public class CityController : BaseController
     {
         // private readonly DataContext dataContext;
         private readonly IUnitOfWork uow;
