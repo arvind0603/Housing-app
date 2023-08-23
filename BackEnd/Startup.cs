@@ -25,12 +25,13 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // ----- Used local user env variable to store and retrieve DBPassword ----- //
+            // var builder = new SqlConnectionStringBuilder(
+            //     Configuration.GetConnectionString("DefaultConn"));
+            // builder.Password = Configuration.GetSection("DBPassword").Value;
+            // var connectionString = builder.ConnectionString;
 
-            var builder = new SqlConnectionStringBuilder(
-                Configuration.GetConnectionString("DefaultConn"));
-            builder.Password = Configuration.GetSection("DBPassword").Value;
-
-            var connectionString = builder.ConnectionString;
+            var connectionString = Configuration.GetConnectionString("DefaultConn");
             Console.WriteLine(connectionString + "Arvind \n\n");
 
             // using Microsoft.EntityFrameworkCore;
