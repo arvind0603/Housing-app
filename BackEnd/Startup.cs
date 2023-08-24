@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using Microsoft.IdentityModel.Tokens;
 
 namespace WebAPI
@@ -36,8 +37,10 @@ namespace WebAPI
 
             // using Microsoft.EntityFrameworkCore;
             services.AddDbContext<BackEnd.Data.DataContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString, 
+                SqlServerOptions => SqlServerOptions.EnableRetryOnFailure()));
                 // Configuration.GetConnectionString("Server=ILD-US-LAP-0201\\SQLEXPRESS; Database=Housing; integrated security = true"))
+
             
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson();
@@ -88,6 +91,9 @@ namespace WebAPI
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

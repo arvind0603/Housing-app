@@ -21,7 +21,7 @@ export class HousingService {
       })
     };
 
-    return this.http.get('http://localhost:5009/api/city', httpOptions);
+    return this.http.get('http://localhost:5009/api/city/cities', httpOptions);
   }
 
   getAllCities(): Observable<string[]> {
