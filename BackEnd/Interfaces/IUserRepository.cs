@@ -9,5 +9,7 @@ namespace BackEnd.Interfaces
     public interface IUserRepository
     {
         Task<User> Authentication(string username, string password);
+        void Register(string username, string password);
+        Task<bool> UserAlreadyExists(string username);
     }
 }

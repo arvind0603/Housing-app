@@ -80,6 +80,9 @@ namespace WebAPI
             
             app.UseRouting();
 
+            app.UseHsts();
+            app.UseHttpsRedirection();
+
             app.UseCors();
 
             app.UseAuthentication();

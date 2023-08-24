@@ -28,7 +28,7 @@ namespace BackEnd.Controllers
 
         }
         //Get api/city
-        [HttpGet]
+        [HttpGet("cities")]
         [AllowAnonymous]
         public async Task<IActionResult> Get() {
             // throw new UnauthorizedAccessException();

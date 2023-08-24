@@ -39,6 +39,20 @@ namespace BackEnd.Controllers
             return Ok(loginRes);
         }
 
+        //api/account/register
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(LoginReqDto loginReq)
+        {
+            if (await uow.UserRepository.UserAlreadyExists(loginReq.Username))
+            {
+                return BadRequest("Username is already taken");
+            }
+
+            uow.UserRepository.Register(loginReq.Username, loginReq.Password);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
+
         private string CreateJWT(User user)
         {
             var secretKey = configuration.GetSection("AppSettings:Key").Value;
