@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
   }
 
   loggedin() {
-    const loggedin = localStorage.getItem('token');
+    const loggedin = localStorage.getItem('userName');
     if (loggedin) {
       this.loggedinUser = loggedin;
       return this.loggedinUser
@@ -26,6 +26,7 @@ export class NavBarComponent implements OnInit {
 
   onLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     this.alertify.success('You have been logged out');
   }
 

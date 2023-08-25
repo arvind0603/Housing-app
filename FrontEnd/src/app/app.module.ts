@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
-import {Routes, RouterModule} from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -20,26 +20,28 @@ import { AddPropertyComponent } from './property/add-property/add-property.compo
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
-import { UserService } from './services/user.service';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
 import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
+import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
 
 const appRoutes: Routes = [
-  {path: '',  component: PropertyListComponent},
-  {path: 'rent-property',  component: PropertyListComponent},
-  {path: 'add-property', component: AddPropertyComponent},
-  {path: 'property-detail/:id', component: PropertyDetailComponent,
-             resolve: {prp: PropertyDetailResolverService}},
-  {path: 'user/login', component: UserLoginComponent},
-  {path: 'user/register', component: UserRegisterComponent},
-  {path: '**', component: PropertyListComponent}
+  { path: '', component: PropertyListComponent },
+  { path: 'rent-property', component: PropertyListComponent },
+  { path: 'add-property', component: AddPropertyComponent },
+  {
+    path: 'property-detail/:id', component: PropertyDetailComponent,
+    resolve: { prp: PropertyDetailResolverService }
+  },
+  { path: 'user/login', component: UserLoginComponent },
+  { path: 'user/register', component: UserRegisterComponent },
+  { path: '**', component: PropertyListComponent }
 ]
 
 @NgModule({
-  declarations: [		
+  declarations: [
     AppComponent,
     PropertyCardCompomnent,
     PropertyListComponent,
@@ -50,7 +52,7 @@ const appRoutes: Routes = [
     UserRegisterComponent,
     FilterPipe,
     SortPipe
-   ],
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -65,8 +67,12 @@ const appRoutes: Routes = [
     BsDatepickerModule.forRoot(),
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorService,
+      multi: true
+    },
     HousingService,
-    UserService,
     AlertifyService,
     AuthService,
     PropertyDetailResolverService
