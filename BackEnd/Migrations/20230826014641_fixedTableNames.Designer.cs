@@ -4,6 +4,7 @@ using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230826014641_fixedTableNames")]
+    partial class fixedTableNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,7 @@ namespace BackEnd.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FurnishingTypes");
+                    b.ToTable("PurnishingTypes");
                 });
 
             modelBuilder.Entity("BackEnd.Models.Photo", b =>
@@ -197,8 +200,6 @@ namespace BackEnd.Migrations
 
                     b.HasIndex("FurnishingTypeId");
 
-                    b.HasIndex("PostedBy");
-
                     b.HasIndex("PropertyTypeId");
 
                     b.ToTable("Properties");
@@ -234,12 +235,6 @@ namespace BackEnd.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("LastUpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastUpdatedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<byte[]>("Password")
                         .IsRequired()
@@ -283,12 +278,6 @@ namespace BackEnd.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackEnd.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("PostedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BackEnd.Models.PropertyType", "PropertyType")
                         .WithMany()
                         .HasForeignKey("PropertyTypeId")
@@ -300,8 +289,6 @@ namespace BackEnd.Migrations
                     b.Navigation("FurnishingType");
 
                     b.Navigation("PropertyType");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BackEnd.Models.Property", b =>
