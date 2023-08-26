@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using BackEnd.Dtos;
 using BackEnd.Errors;
+using BackEnd.Extensions;
 using BackEnd.Interfaces;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -50,9 +51,17 @@ namespace BackEnd.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(LoginReqDto loginReq)
         {
+            ApiError apiError = new ApiError();
+            if (loginReq.Username.IsEmpty() || loginReq.Password.IsEmpty())
+            {
+                apiError.ErroCode = BadRequest().StatusCode;
+                apiError.ErrorMessage = "User or password cannot be blank";
+                return BadRequest(apiError);
+            }
+
             if (await uow.UserRepository.UserAlreadyExists(loginReq.Username))
             {
-                ApiError apiError = new ApiError();
+
                 apiError.ErroCode = BadRequest().StatusCode;
                 apiError.ErrorMessage = "User already exits, please try another username";
                 return BadRequest(apiError);
