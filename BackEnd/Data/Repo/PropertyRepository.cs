@@ -38,9 +38,15 @@ namespace BackEnd.Data.Repo
             return properties;
         }
 
-        public Task<Property> GetPropertyDetailAsync(int id)
+        public async Task<Property> GetPropertyDetailAsync(int id)
         {
-            throw new NotImplementedException();
+            var properties = await dc.Properties
+            .Include(p => p.PropertyType)
+            .Include(p => p.City)
+            .Include(p => p.FurnishingType)
+            .Where(p => p.Id == id)
+            .FirstAsync();
+            return properties;
         }
     }
 }

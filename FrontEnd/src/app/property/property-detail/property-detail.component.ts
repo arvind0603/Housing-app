@@ -19,9 +19,14 @@ export class PropertyDetailComponent implements OnInit {
     this.propertyId = Number(this.route.snapshot.params['id']);
 
     this.route.data.subscribe(
-      (data) => 
-      { this.property = data['prp']; 
-    });
+      (data) => {
+        this.property = data['prp'];
+      });
+
+    if (this.property.estPossessionOn) {
+      this.property.age = this.housingService.getPropertyAge(this.property.estPossessionOn);
+    }
+
 
     // this.route.params.subscribe(
     //   (params) => {
@@ -34,8 +39,8 @@ export class PropertyDetailComponent implements OnInit {
     //         }
     //       }
     //     ), (error: any) => this.router.navigate(['/'])
-        
-      // }
+
+    // }
     // )
   }
 

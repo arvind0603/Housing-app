@@ -31,5 +31,17 @@ namespace BackEnd.Controllers
             return Ok(propertyListDto);
 
         }
+
+        //property/detail/2
+        [HttpGet("detail/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPropertyDetail(int id)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailAsync(id);
+            var propertyDto = mapper.Map<PropertyDetailDto>(property);
+            return Ok(propertyDto);
+
+        }
     }
+
 }

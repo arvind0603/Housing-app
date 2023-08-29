@@ -10,4 +10,6 @@ export interface Ipropertybase {
   city: string | null;
   readyToMove: number | null;
   image?: string | null;
+  estPossessionOn?: Date | null;
+
 }
