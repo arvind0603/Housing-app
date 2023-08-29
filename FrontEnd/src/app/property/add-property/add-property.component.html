@@ -40,7 +40,7 @@
                   <div
                     class="btn-group"
                     btnRadioGroup
-                    [(ngModel)]="propertyView.BHK"
+                    [(ngModel)]="propertyView.bhk"
                     formControlName="BHK"
                   >
                     <label
@@ -65,7 +65,7 @@
                     class="btn-group"
                     btnRadioGroup
                     formControlName="PType"
-                    [(ngModel)]="propertyView.PType"
+                    [(ngModel)]="propertyView.propertyType"
                   >
                     <label
                       *ngFor="let pType of propertyTypes"
@@ -88,7 +88,7 @@
                   <div
                     class="btn-group"
                     btnRadioGroup
-                    [(ngModel)]="propertyView.FType"
+                    [(ngModel)]="propertyView.furnishingType"
                     formControlName="FType"
                   >
                     <label
@@ -124,7 +124,7 @@
                     type="text"
                     class="form-control"
                     formControlName="Name"
-                    [(ngModel)]="propertyView.Name"
+                    [(ngModel)]="propertyView.name"
                   />
                   <div
                     class="error-block"
@@ -142,12 +142,13 @@
                   <label>City</label>
                   <select
                     class="form-control"
-                    [(ngModel)]="propertyView.City"
-                    formControlName="City">
+                    [(ngModel)]="propertyView.city"
+                    formControlName="City"
+                  >
                     <option value="">--select-city--</option>
-                  <option *ngFor="let city of cityList" value={{city.id}}>
-                    {{ city.name }}
-                  </option>
+                    <option *ngFor="let city of cityList" value="{{ city.id }}">
+                      {{ city.name }}
+                    </option>
                   </select>
                   <div
                     class="error-block"
@@ -176,7 +177,7 @@
                     type="text"
                     class="form-control"
                     formControlName="Price"
-                    [(ngModel)]="propertyView.Price"
+                    [(ngModel)]="propertyView.price"
                   />
                   <div
                     class="error-block"
@@ -215,7 +216,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    [(ngModel)]="propertyView.BuiltArea"
+                    [(ngModel)]="propertyView.builtArea"
                     formControlName="BuiltArea"
                   />
                 </div>
@@ -355,7 +356,7 @@
                   />
                 </div>
 
-                <div class="form-group col-12"  *ngIf="this.RTM.value == 'Yes'" >
+                <div class="form-group col-12" *ngIf="this.RTM.value == 'Yes'">
                   <label>Age of Property</label>
                   <input
                     type="text"
@@ -448,16 +449,10 @@
                   >
                     Back
                   </button>
-                  <button
-                    type="reset"
-                    class="btn btn-primary col-12 m-2"
-                  >
+                  <button type="reset" class="btn btn-primary col-12 m-2">
                     Cancel
                   </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary col-12 m-2"
-                  >
+                  <button type="submit" class="btn btn-primary col-12 m-2">
                     Save
                   </button>
                 </div>

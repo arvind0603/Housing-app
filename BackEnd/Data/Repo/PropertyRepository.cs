@@ -29,8 +29,18 @@ namespace BackEnd.Data.Repo
 
         public async Task<IEnumerable<Property>> GetPropertiesAsync(int sellRent)
         {
-            var properties = await dc.Properties.ToListAsync();
+            var properties = await dc.Properties
+            .Include(p => p.PropertyType)
+            .Include(p => p.City)
+            .Include(p => p.FurnishingType)
+            .Where(p => p.SellRent == sellRent)
+            .ToListAsync();
             return properties;
+        }
+
+        public Task<Property> GetPropertyDetailAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
