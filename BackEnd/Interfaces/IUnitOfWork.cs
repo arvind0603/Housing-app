@@ -11,6 +11,7 @@ namespace BackEnd.Interfaces
 
         IUserRepository UserRepository { get; }
         IPropertyRepository PropertyRepository { get; }
+        IPropertyTypeRepository PropertyTypeRepository { get; }
         Task<bool> SaveAsync();
     }
 }
