@@ -10,7 +10,7 @@ namespace BackEnd.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn("Passeord", "Users");
+            migrationBuilder.DropColumn("Password", "Users");
             migrationBuilder.DropColumn("PasswordKey", "Users");
             migrationBuilder.AlterColumn<byte[]>(
                 name: "Password",
@@ -18,8 +18,8 @@ namespace BackEnd.Migrations
                 type: "varbinary(max)",
                 nullable: false,
                 defaultValue: "qwertyuiop");
-                // oldClrType: typeof(string),
-                // oldType: "nvarchar(max)");
+            // oldClrType: typeof(string),
+            // oldType: "nvarchar(max)");
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "PasswordKey",
