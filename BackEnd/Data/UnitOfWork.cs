@@ -15,12 +15,14 @@ namespace BackEnd.Data
         {
             this.dc = dc;
         }
-        public ICityRepository CityRepository => 
+        public ICityRepository CityRepository =>
             new CityRepository(dc);
 
-        public IUserRepository UserRepository => 
+        public IUserRepository UserRepository =>
             new UserRepository(dc);
 
+        public IPropertyRepository PropertyRepository =>
+            new PropertyRepository(dc);
         public async Task<bool> SaveAsync()
         {
             return await dc.SaveChangesAsync() > 0;
