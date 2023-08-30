@@ -13,7 +13,7 @@ export class Property implements Ipropertybase {
   builtArea!: number | null;
   carpetArea?: number | null;
   address!: string | null;
-  address2!: string | null;
+  address2?: string | null;
   floorNo?: string | null;
   totalFloors?: string | null;
   age?: string | null;

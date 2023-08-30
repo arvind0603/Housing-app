@@ -359,32 +359,47 @@
                     type="text"
                     placeholder="Pick a date"
                     class="form-control"
-                    #PossessionOn
+                    #possessionOn
                     (bsValueChange)="
-                      propertyView.estPossessionOn = PossessionOn.value
+                      propertyView.estPossessionOn = possessionOn.value
                     "
                     bsDatepicker
                     [bsConfig]="{
                       containerClass: 'theme-dark-blue',
-                      dateInputFormat: 'MMM DD, YYYY'
+                      dateInputFormat: 'MM/DD/YYYY'
                     }"
                     formControlName="PossessionOn"
                     [value]=""
                   />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      PossessionOn.invalid &&
+                      (NextClicked || PossessionOn.touched)
+                    "
+                  >
+                    Please select establishment/possession date
+                  </div>
                 </div>
 
                 <div class="form-group col-12">
                   <p>Gated Community</p>
                   <div class="btn-group" btnRadioGroup formControlName="Gated">
                     <label
-                      *ngFor="let gc of ['Yes', 'No']"
-                      class="btn btn-outline-primary m-1"
-                      [btnRadio]="gc"
+                      class="btn btn-outline-primary mr-2"
+                      btnRadio="true"
                       tabindex="0"
                       role="button"
-                      name="gc"
+                      name="Gated"
+                      >Yes</label
                     >
-                      {{ gc }}</label
+                    <label
+                      class="btn btn-outline-primary mr-2"
+                      btnRadio="false"
+                      tabindex="0"
+                      role="button"
+                      name="Gated"
+                      >No</label
                     >
                   </div>
                 </div>
