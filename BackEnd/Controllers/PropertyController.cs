@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BackEnd.Dtos;
 using BackEnd.Interfaces;
+using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace BackEnd.Controllers
             this.uow = uow;
         }
 
-        //property/type/2
+        //property/list/2
         [HttpGet("list/{sellRent}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetPropertyList(int sellRent)
@@ -40,6 +41,20 @@ namespace BackEnd.Controllers
             var property = await uow.PropertyRepository.GetPropertyDetailAsync(id);
             var propertyDto = mapper.Map<PropertyDetailDto>(property);
             return Ok(propertyDto);
+
+        }
+
+        //property/add
+        [HttpPost("add/")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddProperty(PropertyDto propertyDto)
+        {
+            var property = mapper.Map<Property>(propertyDto);
+            property.PostedBy = 2;
+            property.LastUpdatedBy = 2;
+            uow.PropertyRepository.AddProperty(property);
+            await uow.SaveAsync();
+            return StatusCode(201);
 
         }
     }

@@ -53,14 +53,19 @@ export class HousingService {
 
 
   addProperty(property: Property) {
-    let newProps = [property];
-    const newProp = localStorage.getItem('newProp')
+    return this.http.post(this.baseUrl + '/property/add', property);
 
-    // Add new property in array if newProp already exists in local storage
-    if (newProp) {
-      newProps = [property, ...JSON.parse(newProp)];
-    }
-    localStorage.setItem('newProp', JSON.stringify(newProps));
+
+
+
+    // let newProps = [property];
+    // const newProp = localStorage.getItem('newProp')
+
+    // // Add new property in array if newProp already exists in local storage
+    // if (newProp) {
+    //   newProps = [property, ...JSON.parse(newProp)];
+    // }
+    // localStorage.setItem('newProp', JSON.stringify(newProps));
   }
 
   newPropId() {
@@ -73,7 +78,7 @@ export class HousingService {
     }
   }
 
-  getPropertyAge(dateofEstablishment: Date): string {
+  getPropertyAge(dateofEstablishment: string): string {
     const today = new Date();
     const estDate = new Date(dateofEstablishment);
     let age = today.getFullYear() - estDate.getFullYear();

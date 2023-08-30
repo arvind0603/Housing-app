@@ -19,7 +19,7 @@ namespace BackEnd.Data.Repo
 
         public void AddProperty(Property property)
         {
-            throw new NotImplementedException();
+            dc.Properties.Add(property);
         }
 
         public void DeleteProperty(int id)

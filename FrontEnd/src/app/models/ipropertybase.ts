@@ -8,8 +8,8 @@ export interface Ipropertybase {
   bhk: string | null;
   builtArea: number | null;
   city: string | null;
-  readyToMove: number | null;
+  readyToMove: boolean | null;
   image?: string | null;
-  estPossessionOn?: Date | null;
+  estPossessionOn?: string | null;
 
 }

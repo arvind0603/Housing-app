@@ -4,8 +4,10 @@ export class Property implements Ipropertybase {
   id!: number | null;
   sellRent!: number | null;
   name!: string | null;
+  propertyTypeId!: number;
   propertyType!: string | null;
   bhk!: string | null;
+  furnishingTypeId!: number;
   furnishingType!: string | null;
   price!: number | null;
   builtArea!: number | null;
@@ -19,9 +21,10 @@ export class Property implements Ipropertybase {
   security?: number | null;
   gated?: boolean
   maintenance?: number | null;
-  estPossessionOn?: Date | null;
+  estPossessionOn?: string | null;
+  cityId!: number;
   city!: string | null;
-  readyToMove!: number | null;
+  readyToMove!: boolean | null;
   image?: string | null | undefined;
   description?: string | null;
 }

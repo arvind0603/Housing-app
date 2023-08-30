@@ -322,19 +322,19 @@
                   <div class="btn-group" btnRadioGroup formControlName="RTM">
                     <label
                       class="btn btn-outline-primary mr-2"
-                      btnRadio="1"
+                      btnRadio="true"
                       tabindex="0"
                       role="button"
-                      (click)="propertyView.readyToMove = 1"
+                      (click)="propertyView.readyToMove = true"
                       name="RTM"
                       >Yes
                     </label>
                     <label
                       class="btn btn-outline-primary mr-2"
-                      btnRadio="2"
+                      btnRadio="false"
                       tabindex="0"
                       role="button"
-                      (click)="propertyView.readyToMove = 0"
+                      (click)="propertyView.readyToMove = false"
                       name="RTM"
                       >No
                     </label>
@@ -361,9 +361,7 @@
                     class="form-control"
                     #PossessionOn
                     (bsValueChange)="
-                      propertyView.estPossessionOn = parseDate(
-                        PossessionOn.value
-                      )
+                      propertyView.estPossessionOn = PossessionOn.value
                     "
                     bsDatepicker
                     [bsConfig]="{

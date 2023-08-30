@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { DatePipe, NgFor } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -47,6 +47,7 @@ export class AddPropertyComponent implements OnInit {
   };
 
   constructor(
+    private datePipe: DatePipe,
     private route: Router,
     private fb: FormBuilder,
     private housingService: HousingService,
@@ -202,15 +203,17 @@ export class AddPropertyComponent implements OnInit {
     if (this.allTabsValid()) {
       console.log(this.addPropertyForm);
       this.mapProperty();
-      this.housingService.addProperty(this.property);
-      this.alertify.success('Congrats! your property listed on our website!');
-      // console.log("sell rent: " + this.addPropertyForm.value.BasicInfo.SellRent)
-      if (this.SellRent.value == 1) {
-        this.route.navigate(['/']);
-      } else {
-        this.route.navigate(['/rent-property']);
-      }
-
+      this.housingService.addProperty(this.property).subscribe(
+        () => {
+          this.alertify.success('Congrats! your property listed on our website!');
+          // console.log("sell rent: " + this.addPropertyForm.value.BasicInfo.SellRent)
+          if (this.SellRent.value == 1) {
+            this.route.navigate(['/']);
+          } else {
+            this.route.navigate(['/rent-property']);
+          }
+        }
+      );
     } else {
       this.alertify.error('Please review and fill out all the fields!');
       console.log(this.addPropertyForm);
@@ -221,10 +224,10 @@ export class AddPropertyComponent implements OnInit {
     this.property.id = this.housingService.newPropId();
     this.property.sellRent = +this.SellRent.value;
     this.property.bhk = this.BHK.value;
-    this.property.propertyType = this.PType.value;
+    this.property.propertyTypeId = this.PType.value;
     this.property.name = this.Name.value;
-    this.property.city = this.City.value;
-    this.property.furnishingType = this.FType.value;
+    this.property.cityId = this.City.value;
+    this.property.furnishingTypeId = this.FType.value;
     this.property.price = this.Price.value;
     this.property.security = this.Security.value;
     this.property.maintenance = this.Maintenance.value;
@@ -237,7 +240,7 @@ export class AddPropertyComponent implements OnInit {
     this.property.readyToMove = this.RTM.value;
     this.property.gated = this.Gated.value;
     this.property.mainEntrance = this.MainEntrance.value;
-    this.property.estPossessionOn = this.PossessionOn.value;
+    this.property.estPossessionOn = this.datePipe.transform(this.PossessionOn.value, 'mm/dd/yyyy');
     this.property.description = this.Description.value;
   }
 

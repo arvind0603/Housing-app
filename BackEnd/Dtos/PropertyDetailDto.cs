@@ -7,6 +7,7 @@ namespace BackEnd.Dtos
 {
     public class PropertyDetailDto : PropertyListDto
     {
+
         public int CarpetArea { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
