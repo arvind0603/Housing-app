@@ -6,6 +6,7 @@ import { IProperty } from '../property/IProperty';
 import { Observable } from 'rxjs';
 import { Ipropertybase } from '../models/ipropertybase';
 import { Property } from '../models/property';
+import { Ikeyvaluepair } from '../models/ikeyvaluepair';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,14 @@ export class HousingService {
       // Assuming the response is an array of strings
       map((response: any) => response as string[])
     );
+  }
+
+  getPropertyTypes(): Observable<Ikeyvaluepair[]> {
+    return this.http.get<Ikeyvaluepair[]>(this.baseUrl + '/propertytype/list');
+  }
+
+  getFurnishingTypes(): Observable<Ikeyvaluepair[]> {
+    return this.http.get<Ikeyvaluepair[]>(this.baseUrl + '/furnishingtype/list');
   }
 
   getProperty(id: number) {

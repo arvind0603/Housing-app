@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { Ikeyvaluepair } from 'src/app/models/ikeyvaluepair';
 import { Ipropertybase } from 'src/app/models/ipropertybase';
 import { Property } from 'src/app/models/property';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -28,8 +29,8 @@ export class AddPropertyComponent implements OnInit {
   NextClicked: boolean = false;
   property = new Property();
 
-  propertyTypes: Array<string> = ['House', 'Apartment', 'Villas'];
-  furnishTypes: Array<string> = ['Fully', 'Semi-Furnished', 'Not Furnished'];
+  propertyTypes!: Ikeyvaluepair[];
+  furnishTypes!: Ikeyvaluepair[];
   cityList: any[] = [];
 
   propertyView: Ipropertybase = {
@@ -58,6 +59,24 @@ export class AddPropertyComponent implements OnInit {
       this.cityList = data;
       console.log(data);
     });
+
+    this.housingService.getPropertyTypes().subscribe((data) => {
+      this.propertyTypes = data;
+    });
+
+    this.housingService.getFurnishingTypes().subscribe((data) => {
+      this.furnishTypes = data;
+    });
+
+    // this.propertyView.estPossessionOn = new Date();
+  }
+
+  parseDate(dateString: string | undefined): Date | undefined {
+    if (dateString) {
+      return new Date(dateString);
+    } else {
+      return undefined;
+    }
   }
 
   CreateAddPropertyForm() {
@@ -221,6 +240,9 @@ export class AddPropertyComponent implements OnInit {
     this.property.estPossessionOn = this.PossessionOn.value;
     this.property.description = this.Description.value;
   }
+
+
+
 
   allTabsValid(): boolean {
     if (this.BasicInfo.invalid) {
