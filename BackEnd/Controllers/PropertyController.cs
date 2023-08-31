@@ -46,12 +46,13 @@ namespace BackEnd.Controllers
 
         //property/add
         [HttpPost("add/")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> AddProperty(PropertyDto propertyDto)
         {
             var property = mapper.Map<Property>(propertyDto);
-            property.PostedBy = 2;
-            property.LastUpdatedBy = 2;
+            var userId = GetUserId();
+            property.PostedBy = userId;
+            property.LastUpdatedBy = userId;
             uow.PropertyRepository.AddProperty(property);
             await uow.SaveAsync();
             return StatusCode(201);

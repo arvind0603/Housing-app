@@ -51,8 +51,13 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       //Client side error
       errorMessage = error.error.message;
     } else {
+
+      //Unauthorized
+      if (error.status === ErrorCode.unauthorized) {
+        return error.statusText;
+      }
       //server side error
-      if (error.status !== ErrorCode.serverDown) {
+      if (error.error.errorMessage && error.status !== ErrorCode.serverDown) {
         errorMessage = error.error.errorMessage;
       }
     }
