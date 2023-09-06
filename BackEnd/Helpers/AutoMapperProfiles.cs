@@ -28,6 +28,7 @@ namespace BackEnd.Helpers
             CreateMap<PropertyType, KeyValuePairDto>().ReverseMap();
 
             CreateMap<FurnishingType, KeyValuePairDto>().ReverseMap();
+            CreateMap<Photo, PhotoDto>().ReverseMap();
 
         }
     }

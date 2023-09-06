@@ -21,6 +21,7 @@ export class PropertyDetailComponent implements OnInit {
     this.route.data.subscribe(
       (data) => {
         this.property = data['prp'];
+        console.log(this.property.photos);
       });
 
     if (this.property.estPossessionOn) {
