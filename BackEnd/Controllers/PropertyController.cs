@@ -15,10 +15,12 @@ namespace BackEnd.Controllers
     {
         private readonly IUnitOfWork uow;
         public readonly IMapper mapper;
+        private readonly IPhotoService photoService;
 
-        public PropertyController(IUnitOfWork uow, IMapper mapper)
+        public PropertyController(IUnitOfWork uow, IMapper mapper, IPhotoService photoService)
         {
             this.mapper = mapper;
+            this.photoService = photoService;
             this.uow = uow;
         }
 
@@ -56,6 +58,20 @@ namespace BackEnd.Controllers
             uow.PropertyRepository.AddProperty(property);
             await uow.SaveAsync();
             return StatusCode(201);
+
+        }
+
+        //property/add/photo/1
+        [HttpPost("add/photo/{id}")]
+        [Authorize]
+        public async Task<IActionResult> AddProperty(IFormFile file, int propId)
+        {
+            var result = await photoService.UploadPhotoAsync(file);
+            if (result.Error != null)
+            {
+                return BadRequest(result.Error.Message);
+            }
+            return Ok(201);
 
         }
     }

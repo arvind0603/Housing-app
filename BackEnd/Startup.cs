@@ -5,6 +5,7 @@ using BackEnd.Extensions;
 using BackEnd.Helpers;
 using BackEnd.Interfaces;
 using BackEnd.Middlewares;
+using BackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Data.SqlClient;
@@ -37,11 +38,11 @@ namespace WebAPI
 
             // using Microsoft.EntityFrameworkCore;
             services.AddDbContext<BackEnd.Data.DataContext>(options =>
-                options.UseSqlServer(connectionString, 
+                options.UseSqlServer(connectionString,
                 SqlServerOptions => SqlServerOptions.EnableRetryOnFailure()));
-                // Configuration.GetConnectionString("Server=ILD-US-LAP-0201\\SQLEXPRESS; Database=Housing; integrated security = true"))
+            // Configuration.GetConnectionString("Server=ILD-US-LAP-0201\\SQLEXPRESS; Database=Housing; integrated security = true"))
 
-            
+
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson();
             services.AddCors(options =>
@@ -54,13 +55,17 @@ namespace WebAPI
                     });
                 });
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddSingleton<IConfiguration>(Configuration);
+
 
             var secretKey = Configuration.GetSection("AppSettings:Key").Value;
             Console.Write(secretKey + " Arvind \n\n");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt => {
+                .AddJwtBearer(opt =>
+                {
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -69,7 +74,7 @@ namespace WebAPI
                         IssuerSigningKey = key
                     };
                 }
-                );    
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,9 +83,9 @@ namespace WebAPI
             app.ConfigureExceptionHandler(env);
 
             // app.ConfigureBuiltInExceptionHandler(env);
-            
+
             // app.UseMiddleware<ExceptionMiddleware>();
-            
+
             app.UseRouting();
 
             app.UseHsts();
