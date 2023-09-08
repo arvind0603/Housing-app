@@ -3,12 +3,12 @@
     <div class="card">
       <div class="card-img-wrapper">
         <img
-          *ngIf="property.image"
+          *ngIf="mainPhotoUrl"
           class="card-img-top"
-          src="assets/images/{{ property.image }}.jpg"
+          src="{{ mainPhotoUrl }}"
         />
         <img
-          *ngIf="!property.image"
+          *ngIf="!mainPhotoUrl"
           class="card-img-top"
           src="assets/images/house_default.jpg"
         />
@@ -123,7 +123,11 @@
           </div>
         </tab>
         <tab heading="Photos">
-          <h1>Photos</h1>
+          <ngx-gallery
+            [options]="galleryOptions"
+            [images]="galleryImages"
+            class="ngx-gallery"
+          ></ngx-gallery>
         </tab>
         <tab heading="Contact">
           <h1>Contact Detail</h1>
